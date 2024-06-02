@@ -41,7 +41,10 @@ public func shareFilesFromDirectory(_ directoryPath: String, defaults: [String] 
                 }
             }
         }
-        let filePath = directoryPath + String.pathSeparator + fileRelativePath.value
+        var filePath = directoryPath + String.pathSeparator + fileRelativePath.value
+        if let cleanPath = filePath.removingPercentEncoding {
+            filePath = cleanPath
+        }
 
         if let file = try? filePath.openForReading() {
             let mimeType = fileRelativePath.value.mimeType()
